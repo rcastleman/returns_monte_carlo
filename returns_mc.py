@@ -1,19 +1,38 @@
+from matplotlib import lines
 import xlwings as xw
-from xlwings import constants
 import pandas as pd
 import random
 import numpy as np
 from numpy.random import uniform
+from turtle import color
 import matplotlib.pyplot as plt
-from datetime import date,timedelta
+import datetime as dt
 from pyxirr import xirr
 
-
 # connect workbook to program
+book = xw.Book('returns_model.xlsx')  
 
 #define Model and Results sheets
+model = book.sheets('Model')
+results = book.sheets('Results')
 
 #connect XLS static values -> program
+S1_date = model.range("B2").options(dates=dt.date).value
+S2_date = model.range("B3").value
+S3_date = model.range("B4").value
+S4_date = model.range("B5").value
+S5_date = model.range("B6").value
+
+print(S1_date)
+
+# class Series:
+#     def __init__(self):
+#         self.name = None
+#         self.date = None 
+#         self.duration = None
+#         self.target_percent = None
+#         self.total_capital = None
+
 
 #connect XLS dynamic variable params -> program
 
@@ -22,6 +41,9 @@ from pyxirr import xirr
 #connection XLS IRR output -> program
 
 #Simulation
+num_sims = 500
+input_list = []
+output_list = []
 
 #collect results in dataframe
 
@@ -30,3 +52,5 @@ from pyxirr import xirr
 #create plot(s)
 
 #Results and Plots -> XLS Results
+
+# print("no bugs currently")
