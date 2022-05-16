@@ -23,9 +23,16 @@ S3_date = model.range("B4").options(dates=dt.date).value
 S4_date = model.range("B5").options(dates=dt.date).value
 S5_date = model.range("B6").options(dates=dt.date).value
 
+S1_duration = model.range("C2").value
+S2_duration = model.range("C3").value
+S3_duration = model.range("C4").value
+S4_duration = model.range("C5").value
+S5_duration = model.range("C6").value
+
 for i in range(1,6):
-    new_var = globals()[f"S{i}_date"]
-    print(new_var)
+    temp_date = globals()[f"S{i}_date"]
+    temp_dur = globals()[f"S{i}_duration"]
+    print(temp_date,temp_dur)
  
 
 # class Series:
