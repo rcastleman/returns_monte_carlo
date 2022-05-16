@@ -18,12 +18,15 @@ results = book.sheets('Results')
 
 #connect XLS static values -> program
 S1_date = model.range("B2").options(dates=dt.date).value
-S2_date = model.range("B3").value
-S3_date = model.range("B4").value
-S4_date = model.range("B5").value
-S5_date = model.range("B6").value
+S2_date = model.range("B3").options(dates=dt.date).value
+S3_date = model.range("B4").options(dates=dt.date).value
+S4_date = model.range("B5").options(dates=dt.date).value
+S5_date = model.range("B6").options(dates=dt.date).value
 
-print(S1_date)
+for i in range(1,6):
+    new_var = globals()[f"S{i}_date"]
+    print(new_var)
+ 
 
 # class Series:
 #     def __init__(self):
