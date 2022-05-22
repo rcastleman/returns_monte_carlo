@@ -16,35 +16,33 @@ book = xw.Book('returns_model.xlsx')
 model = book.sheets('Model')
 results = book.sheets('Results')
 
-#connect XLS static values -> program
-S1_date = model.range("B2").options(dates=dt.date).value
-S2_date = model.range("B3").options(dates=dt.date).value
-S3_date = model.range("B4").options(dates=dt.date).value
-S4_date = model.range("B5").options(dates=dt.date).value
-S5_date = model.range("B6").options(dates=dt.date).value
-
 num_series = 5
-row_of_first_series = 2 
+first_row = 2 
+initial_pre_money = model.range("F2").value
 
 series_list = []
 
 for i in range(num_series):
-    series_name = f"Series {i+1}"
+    series_name = model.range(f"A{i + first_row}").value
+    print("\r\n")
+    print(f"Series Name: {series_name}")
+    series_date = model.range(f"B{i + first_row}").options(dates=dt.date).value #depends on where the cell is
+    print(f"Series Date: {series_date}")
+    series_duration = model.range(f"C{i + first_row}").value
+    print(f"Series Duration: {series_duration} days")
+    series_target_percent = model.range(f"D{i + first_row}").value
+    print(f"Investor Target %: {series_target_percent*100}")
+    series_stepup = model.range(f"E{i + first_row}").value
+    print(f"Step-up from Last Series: {series_stepup}x")
+    series_total_capital = model.range(f"F{i + first_row}").value
+    print(f"Series Total Capital: ${series_total_capital}")
+    series_investor_capital = series_total_capital * series_target_percent
+    print(f"Investor Capital: ${series_investor_capital}")
+    # series_post = 
 
-    series_date = model.range(f"B{i+row_of_first_series}").options(dates=dt.date).value #depends on where the cell is
-    print(series_date)
-
-    series_duration = model.range(f"C{i+row_of_first_series}").value
-    print(series_duration)
 
     # series = Series(series_name, series_date, series_duration, ...)
     # series_list.append(series)
-
-S1_duration = model.range("C2").value
-S2_duration = model.range("C3").value
-S3_duration = model.range("C4").value
-S4_duration = model.range("C5").value
-S5_duration = model.range("C6").value
 
 # for i in range(1,6):
 #     temp_date = globals()[f"S{i}_date"]
