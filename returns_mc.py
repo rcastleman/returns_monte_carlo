@@ -9,6 +9,20 @@ import matplotlib.pyplot as plt
 import datetime as dt
 from pyxirr import xirr
 
+
+"""Strategy:
+1. connect program to excel
+2. read input variables from excel
+3. read distribution parameters from excel
+4. define Simulation class
+5. run [x] simulations
+6. collect data from each simulation
+7. port data to excel
+8. port plots to excel
+
+"""
+
+
 # connect workbook to program
 book = xw.Book('returns_model.xlsx')  
 
@@ -16,13 +30,15 @@ book = xw.Book('returns_model.xlsx')
 model = book.sheets('Model')
 results = book.sheets('Results')
 
+#define number of series in case that changes someday(?)
 num_series = 5
+#define positional offsets to target correct cells
 first_row = 2 
 initial_pre_money = model.range("F2").value
 
 series_list = []
 
-for i in range(num_series):
+for i in range(num_series):  #defining in terms of num_series may not be the best way to do this... 
     series_name = model.range(f"A{i + first_row}").value
     print("\r\n")
     print(f"Series Name: {series_name}")
@@ -39,7 +55,6 @@ for i in range(num_series):
     series_investor_capital = series_total_capital * series_target_percent
     print(f"Investor Capital: ${series_investor_capital}")
     # series_post = 
-
 
     # series = Series(series_name, series_date, series_duration, ...)
     # series_list.append(series)
