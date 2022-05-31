@@ -23,7 +23,6 @@ from pyxirr import xirr
 
 """
 
-
 # connect workbook to program
 book = xw.Book('returns_model.xlsx')  
 
@@ -37,7 +36,7 @@ num_series = 5
 first_row = 2 
 initial_pre_money = model.range("F2").value
 
-#read in distribution parameters
+#read distribution parameters
 series1_date = model.range("H13").value
 duration_min = model.range("J14").value
 duration_mode = model.range("K14").value
@@ -58,7 +57,12 @@ s3_total_capital = model.range("H25").value
 s4_total_capital = model.range("H26").value
 s5_total_capital = model.range("H27").value
 
-
+#read exit data
+exit_date = model.range("B9").value
+exit_stepup = model.range("C10").value
+exit_proceeds = model.range("C9").value
+MOIC = model.range("B13").value
+IRR = model.range("B14").value
 
 series_list = []
 
