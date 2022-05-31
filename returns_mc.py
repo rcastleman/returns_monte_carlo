@@ -15,10 +15,11 @@ from pyxirr import xirr
 2. read input variables from excel
 3. read distribution parameters from excel
 4. define Simulation class
+    4(a) define Series class?
 5. run [x] simulations
 6. collect data from each simulation
-7. port data to excel
-8. port plots to excel
+7. send data to excel
+8. send distribution plots to excel
 
 """
 
@@ -35,6 +36,29 @@ num_series = 5
 #define positional offsets to target correct cells
 first_row = 2 
 initial_pre_money = model.range("F2").value
+
+#read in distribution parameters
+series1_date = model.range("H13").value
+duration_min = model.range("J14").value
+duration_mode = model.range("K14").value
+duration_max = model.range("L14").value
+series_stepup_mean = model.range("K15").value
+series_stepup_sd = model.range("M15").value
+exit_stepup_mean = model.range("K16").value
+exit_stepup_sd = model.range("M16").value
+s1_target = model.range("H17").value
+s2_target = model.range("H18").value
+s3_target = model.range("H19").value
+s4_target = model.range("H20").value
+s5_target = model.range("H21").value
+s1_pre = model.range("H22").value
+s1_total_capital = model.range("H23").value
+s2_total_capital = model.range("H24").value
+s3_total_capital = model.range("H25").value
+s4_total_capital = model.range("H26").value
+s5_total_capital = model.range("H27").value
+
+
 
 series_list = []
 
