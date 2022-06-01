@@ -27,6 +27,7 @@ book = xw.Book('returns_model.xlsx')
 #define Model and Results sheets
 model = book.sheets('Model')
 results = book.sheets('Results')
+results.clear_contents()
 
 #read distribution parameters
 series1_date = model.range("H13").value
@@ -38,7 +39,7 @@ series_stepup_sd = model.range("M15").value
 exit_stepup_mean = model.range("K16").value
 exit_stepup_sd = model.range("M16").value
 
-num_sims = 3
+num_sims = 5
 simulation_results = []
 
 for sim in range(num_sims):
@@ -56,7 +57,7 @@ for sim in range(num_sims):
     model.range("E6").value = np.random.normal(series_stepup_mean, series_stepup_sd)
     
     #use np.normal to geneate exit stepup value 
-    model.range("C10").value = np.random.normal(exit_stepup_mean, exit_stepup_sd)
+    model.range("C10").value = np.random.lognormal(exit_stepup_mean, exit_stepup_sd)
    
     #read exit data
     exit_date = model.range("B9").value
@@ -67,15 +68,18 @@ for sim in range(num_sims):
 
     simulation_results.append([MOIC,IRR]) 
 
-print(simulation_results)
-
 #collect results in dataframe
-
-#transpose inputs & outputs to be exported to worksheet
+output_data = pd.DataFrame(simulation_results,columns = ["MOIC","IRR"])
+output_data.index.name = 'Sim #'
+results.range('A1').value = output_data
 
 #create plot(s)
 
-#Results and Plots -> XLS Results
+#Plots -> XLS Results
+
+
+
+
 
 #DISCARDS
 # class Series:
