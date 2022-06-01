@@ -38,17 +38,25 @@ series_stepup_sd = model.range("M15").value
 exit_stepup_mean = model.range("K16").value
 exit_stepup_sd = model.range("M16").value
 
-num_sims = 2
+num_sims = 3
 simulation_results = []
 
 for sim in range(num_sims):
     #use np.triangular to generate duration
+    model.range("C2").value = np.random.triangular(duration_min, duration_mode, duration_max)
+    model.range("C3").value = np.random.triangular(duration_min, duration_mode, duration_max)
+    model.range("C4").value = np.random.triangular(duration_min, duration_mode, duration_max)
+    model.range("C5").value = np.random.triangular(duration_min, duration_mode, duration_max)
+    model.range("C6").value = np.random.triangular(duration_min, duration_mode, duration_max)
 
     #use np.normal to generate stepup values
-
+    model.range("E3").value = np.random.normal(series_stepup_mean, series_stepup_sd)
+    model.range("E4").value = np.random.normal(series_stepup_mean, series_stepup_sd)
+    model.range("E5").value = np.random.normal(series_stepup_mean, series_stepup_sd)
+    model.range("E6").value = np.random.normal(series_stepup_mean, series_stepup_sd)
+    
     #use np.normal to geneate exit stepup value 
-
-    #write each into the proper place into the excel sheet
+    model.range("C10").value = np.random.normal(exit_stepup_mean, exit_stepup_sd)
    
     #read exit data
     exit_date = model.range("B9").value
