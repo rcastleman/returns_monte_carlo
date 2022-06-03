@@ -39,7 +39,7 @@ series_stepup_sd = model.range("M15").value
 exit_stepup_mean = model.range("K16").value
 exit_stepup_sd = model.range("M16").value
 
-num_sims = 5
+num_sims = 25
 simulation_results = []
 
 for sim in range(num_sims):
@@ -59,7 +59,7 @@ for sim in range(num_sims):
     #use np.normal to geneate exit stepup value 
     model.range("C10").value = np.random.lognormal(exit_stepup_mean, exit_stepup_sd)
    
-    #read exit data
+    #read exit results
     exit_date = model.range("B9").value
     exit_stepup = model.range("C10").value
     exit_proceeds = model.range("C9").value
@@ -73,11 +73,55 @@ output_data = pd.DataFrame(simulation_results,columns = ["MOIC","IRR"])
 output_data.index.name = 'Sim #'
 results.range('A1').value = output_data
 
-#create plot(s)
+#CREATE PLOTS
 
-#Plots -> XLS Results
+#probability density function
+prob_density_fig = plt.figure()
+plot = plt.hist(output_data,
+        density=True,
+        bins=10)
+plt.xlabel('Outputs')
+plt.ylabel('Density')
+plt.title('Distribution of Outcomes')
+plt.vlines(output_data.mean(),
+    ymin = 0,
+    ymax = 0.025,
+    color='red')
 
+#cumulative distribution function
+cumul_dist_fig = plt.figure()
+# x = np.sort(output_data)
+x = output_data.sort_index()
+# x = [i for i in range(num_sims)]
+y = np.arange(1,len(x)+1)/len(x)
+plt.plot(x,y,
+    marker = '.',
+    linestyle = None)
+plt.xlabel = ('Outputs')
+plt.title('Cumulative Distribution Function')
+plt.plot(x,y)
+plt.show
 
+#dataframe description
+description = output_data.describe()
+
+#Plots -> Results tab
+rng = results.range('G2')
+results.pictures.add(prob_density_fig,
+    name = 'Simulation',
+    update = True,
+    top = rng.top,
+    left = rng.left)
+
+rng = results.range('G24')
+
+results.pictures.add(cumul_dist_fig,
+    name = 'Cumul Dist Function',
+    update = True,
+    top = rng.top,
+    left = rng.left)
+
+results.range('E1').value = description
 
 
 
