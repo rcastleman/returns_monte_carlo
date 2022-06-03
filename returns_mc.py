@@ -28,10 +28,8 @@ book = xw.Book('returns_model.xlsx')
 model = book.sheets('Model')
 results = book.sheets('Results')
 results.clear_contents()
-plots = book.sheets('Plots')
 
 #read distribution parameters
-series1_date = model.range("H13").value
 duration_min = model.range("J14").value
 duration_mode = model.range("K14").value
 duration_max = model.range("L14").value
@@ -72,6 +70,8 @@ for sim in range(num_sims):
 #collect results in dataframe
 output_data = pd.DataFrame(simulation_results,columns = ["MOIC","IRR"])
 output_data.index.name = 'Sim #'
+
+#output data -> Results tab
 results.range('A1').value = output_data
 
 #CREATE PLOTS
@@ -127,7 +127,7 @@ plt.show
 #dataframe description
 description = output_data.describe()
 
-#Plots -> Results tab
+#PLOTS -> Results tab
 results.range('E1').value = description
 
 rng_1 = results.range('I1')
