@@ -28,6 +28,7 @@ book = xw.Book('returns_model.xlsx')
 model = book.sheets('Model')
 results = book.sheets('Results')
 results.clear_contents()
+plots = book.sheets('Plots')
 
 #read distribution parameters
 series1_date = model.range("H13").value
@@ -129,33 +130,33 @@ description = output_data.describe()
 #Plots -> Results tab
 results.range('E1').value = description
 
-rng = results.range('I2')
+rng_1 = results.range('I1')
 results.pictures.add(MOIC_PDF_fig,
-    name = 'Simulation',
+    name = 'MOIC PDF',
     update = True,
-    top = rng.top,
-    left = rng.left)
+    top = rng_1.top,
+    left = rng_1.left)
 
-rng = results.range('I29')
+rng_2 = results.range('I29')
 results.pictures.add(IRR_PDF_fig,
-    name = 'Simulation',
+    name = 'IRR PDF',
     update = True,
-    top = rng.top,
-    left = rng.left)
+    top = rng_2.top,
+    left = rng_2.left)
 
-rng = results.range('P2')
+rng_3 = results.range('P1')
 results.pictures.add(MOIC_CDF_fig,
-    name = 'Cumul Dist Function',
+    name = 'MOIC CDF',
     update = True,
-    top = rng.top,
-    left = rng.left)
+    top = rng_3.top,
+    left = rng_3.left)
 
-rng = results.range('P29')
+rng_4 = results.range('P29')
 results.pictures.add(IRR_CDF_fig,
-    name = 'Cumul Dist Function',
+    name = 'IRR CDF',
     update = True,
-    top = rng.top,
-    left = rng.left)
+    top = rng_4.top,
+    left = rng_4.left)
 
 
 #DISCARDS
