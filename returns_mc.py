@@ -39,7 +39,7 @@ series_stepup_sd = model.range("M15").value
 exit_stepup_mean = model.range("K16").value
 exit_stepup_sd = model.range("M16").value
 
-num_sims = 25
+num_sims = 50
 simulation_results = []
 
 for sim in range(num_sims):
@@ -76,29 +76,50 @@ results.range('A1').value = output_data
 #CREATE PLOTS
 
 #probability density function
-prob_density_fig = plt.figure()
-plot = plt.hist(output_data,
+MOIC_PDF_fig = plt.figure()
+plot = plt.hist(output_data["MOIC"],
         density=True,
         bins=10)
 plt.xlabel('Outputs')
 plt.ylabel('Density')
-plt.title('Distribution of Outcomes')
-plt.vlines(output_data.mean(),
+plt.title('MOIC - Probability Distribution')
+plt.vlines(output_data["MOIC"].mean(),
     ymin = 0,
-    ymax = 0.025,
+    ymax = 2,
+    color='red')
+
+IRR_PDF_fig = plt.figure()
+plot = plt.hist(output_data["IRR"],
+        density=True,
+        bins=10)
+plt.xlabel('Outputs')
+plt.ylabel('Density')
+plt.title('IRR - Probability Distribution')
+plt.vlines(output_data["IRR"].mean(),
+    ymin = 0,
+    ymax = 2,
     color='red')
 
 #cumulative distribution function
-cumul_dist_fig = plt.figure()
-# x = np.sort(output_data)
-x = output_data.sort_index()
-# x = [i for i in range(num_sims)]
+MOIC_CDF_fig = plt.figure()
+x = np.sort(output_data["MOIC"])
 y = np.arange(1,len(x)+1)/len(x)
 plt.plot(x,y,
     marker = '.',
     linestyle = None)
 plt.xlabel = ('Outputs')
-plt.title('Cumulative Distribution Function')
+plt.title('MOIC - Cumulative Distribution Function')
+plt.plot(x,y)
+plt.show
+
+IRR_CDF_fig = plt.figure()
+x = np.sort(output_data["IRR"])
+y = np.arange(1,len(x)+1)/len(x)
+plt.plot(x,y,
+    marker = '.',
+    linestyle = None)
+plt.xlabel = ('Outputs')
+plt.title('IRR - Cumulative Distribution Function')
 plt.plot(x,y)
 plt.show
 
@@ -106,23 +127,35 @@ plt.show
 description = output_data.describe()
 
 #Plots -> Results tab
-rng = results.range('G2')
-results.pictures.add(prob_density_fig,
+results.range('E1').value = description
+
+rng = results.range('I2')
+results.pictures.add(MOIC_PDF_fig,
     name = 'Simulation',
     update = True,
     top = rng.top,
     left = rng.left)
 
-rng = results.range('G24')
+rng = results.range('I29')
+results.pictures.add(IRR_PDF_fig,
+    name = 'Simulation',
+    update = True,
+    top = rng.top,
+    left = rng.left)
 
-results.pictures.add(cumul_dist_fig,
+rng = results.range('P2')
+results.pictures.add(MOIC_CDF_fig,
     name = 'Cumul Dist Function',
     update = True,
     top = rng.top,
     left = rng.left)
 
-results.range('E1').value = description
-
+rng = results.range('P29')
+results.pictures.add(IRR_CDF_fig,
+    name = 'Cumul Dist Function',
+    update = True,
+    top = rng.top,
+    left = rng.left)
 
 
 #DISCARDS
