@@ -38,7 +38,7 @@ series_stepup_sd = model.range("M15").value
 exit_stepup_mean = model.range("K16").value
 exit_stepup_sd = model.range("M16").value
 
-num_sims = 50
+num_sims = 100
 simulation_results = []
 
 for sim in range(num_sims):
@@ -86,7 +86,7 @@ plt.ylabel('Density')
 plt.title('MOIC - Probability Distribution')
 plt.vlines(output_data["MOIC"].mean(),
     ymin = 0,
-    ymax = 2,
+    ymax = 0.20,
     color='red')
 
 IRR_PDF_fig = plt.figure()
@@ -98,7 +98,7 @@ plt.ylabel('Density')
 plt.title('IRR - Probability Distribution')
 plt.vlines(output_data["IRR"].mean(),
     ymin = 0,
-    ymax = 2,
+    ymax = 2.5,
     color='red')
 
 #cumulative distribution function
